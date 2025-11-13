@@ -1,4 +1,4 @@
 .github/
 .venv/
-.logs/
-.tests/
+logs/
+tests/
