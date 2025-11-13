@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if query %}{{ query }} - {% endif %}Kết Quả Tìm Kiếm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="bg-primary text-white py-3 mb-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1 class="h3 mb-0">
+                            <i class="fas fa-film me-2"></i>
+                            <a href="{{ url_for('index') }}" class="text-white text-decoration-none">
+                                Máy Tìm Kiếm Phim
+                            </a>
+                        </h1>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Search form in header -->
+                        <form method="GET" action="{{ url_for('search') }}" class="d-flex">
+                            <input type="text" 
+                                   class="form-control me-2" 
+                                   name="q" 
+                                   placeholder="Tìm kiếm phim..." 
+                                   value="{{ query }}">
+                            <button class="btn btn-outline-light" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            {% if query %}
+                <!-- Search Results Header -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="h4 mb-1">
+                                    Kết quả tìm kiếm cho: <span class="text-primary">"{{ query }}"</span>
+                                </h2>
+                                <p class="text-muted mb-0">
+                                    <i class="fas fa-search me-1"></i>
+                                    Tìm thấy {{ total }} kết quả
+                                    {% if total > 0 %}(trang {{ page }}){% endif %}
+                                </p>
+                            </div>
+                            {% if total > 0 %}
+                                <div class="text-muted">
+                                    <small>Sắp xếp theo độ liên quan</small>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if results %}
+                    <!-- Search Results -->
+                    <div class="row">
+                        {% for movie in results %}
+                            <div class="col-12 mb-4">
+                                <div class="card search-result-card h-100">
+                                    <div class="row g-0">
+                                        <!-- Movie Poster -->
+                                        <div class="col-md-2">
+                                            <div class="poster-container">
+                                                {% if movie.poster_url %}
+                                                    <img src="{{ movie.poster_url }}" 
+                                                         class="img-fluid rounded-start poster-img" 
+                                                         alt="{{ movie.title }}"
+                                                         onerror="this.src='{{ url_for('static', filename='images/no-poster.jpg') }}'">
+                                                {% else %}
+                                                    <div class="no-poster d-flex align-items-center justify-content-center bg-light rounded-start">
+                                                        <i class="fas fa-film text-muted fa-2x"></i>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Movie Info -->
+                                        <div class="col-md-10">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <h5 class="card-title mb-1">
+                                                        <a href="{{ movie.url }}" 
+                                                           target="_blank" 
+                                                           class="text-decoration-none text-primary">
+                                                            {{ movie.highlighted_title|safe if movie.highlighted_title else movie.title }}
+                                                        </a>
+                                                    </h5>
+                                                    <div class="movie-meta">
+                                                        {% if movie.year %}
+                                                            <span class="badge bg-secondary">{{ movie.year }}</span>
+                                                        {% endif %}
+                                                        {% if movie.rating %}
+                                                            <span class="badge bg-warning text-dark">
+                                                                <i class="fas fa-star"></i> {{ movie.rating }}
+                                                            </span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                
+                                                {% if movie.original_title and movie.original_title != movie.title %}
+                                                    <p class="text-muted mb-1">
+                                                        <small><i>{{ movie.original_title }}</i></small>
+                                                    </p>
+                                                {% endif %}
+                                                
+                                                <div class="movie-details mb-2">
+                                                    {% if movie.genre %}
+                                                        <span class="me-3">
+                                                            <i class="fas fa-tags text-info me-1"></i>
+                                                            {{ movie.genre }}
+                                                        </span>
+                                                    {% endif %}
+                                                    {% if movie.country %}
+                                                        <span class="me-3">
+                                                            <i class="fas fa-globe text-success me-1"></i>
+                                                            {{ movie.country }}
+                                                        </span>
+                                                    {% endif %}
+                                                    {% if movie.duration %}
+                                                        <span class="me-3">
+                                                            <i class="fas fa-clock text-warning me-1"></i>
+                                                            {{ movie.duration }}
+                                                        </span>
+                                                    {% endif %}
+                                                    {% if movie.quality %}
+                                                        <span class="badge bg-primary">{{ movie.quality }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                
+                                                {% if movie.director or movie.cast %}
+                                                    <div class="movie-people mb-2">
+                                                        {% if movie.director %}
+                                                            <p class="mb-1">
+                                                                <strong>Đạo diễn:</strong> {{ movie.director }}
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if movie.cast %}
+                                                            <p class="mb-1">
+                                                                <strong>Diễn viên:</strong> 
+                                                                {{ movie.cast[:100] }}{% if movie.cast|length > 100 %}...{% endif %}
+                                                            </p>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+                                                
+                                                {% if movie.description %}
+                                                    <p class="card-text movie-description">
+                                                        {{ movie.highlighted_description|safe if movie.highlighted_description else movie.description[:200] }}
+                                                        {% if movie.description|length > 200 %}...{% endif %}
+                                                    </p>
+                                                {% endif %}
+                                                
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="movie-actions">
+                                                        <a href="{{ movie.url }}" 
+                                                           target="_blank" 
+                                                           class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-play me-1"></i> Xem phim
+                                                        </a>
+                                                    </div>
+                                                    <div class="relevance-score">
+                                                        <small class="text-muted">
+                                                            Độ liên quan: {{ "%.2f"|format(movie.relevance_score) }}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if total > 10 %}
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <nav aria-label="Phân trang kết quả tìm kiếm">
+                                    <ul class="pagination justify-content-center">
+                                        <!-- Previous page -->
+                                        {% if page > 1 %}
+                                            <li class="page-item">
+                                                <a class="page-link" 
+                                                   href="{{ url_for('search', q=query, page=page-1) }}">
+                                                    <i class="fas fa-chevron-left"></i> Trước
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        
+                                        <!-- Page numbers -->
+                                        {% set total_pages = (total / 10)|round(0, 'ceil')|int %}
+                                        {% for p in range(1, min(total_pages + 1, 11)) %}
+                                            <li class="page-item {% if p == page %}active{% endif %}">
+                                                <a class="page-link" 
+                                                   href="{{ url_for('search', q=query, page=p) }}">
+                                                    {{ p }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                        
+                                        <!-- Next page -->
+                                        {% if page < total_pages %}
+                                            <li class="page-item">
+                                                <a class="page-link" 
+                                                   href="{{ url_for('search', q=query, page=page+1) }}">
+                                                    Sau <i class="fas fa-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                {% else %}
+                    <!-- No Results -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center py-5">
+                                <i class="fas fa-search fa-3x text-warning mb-3"></i>
+                                <h4>Không tìm thấy kết quả nào</h4>
+                                <p class="mb-3">Không có phim nào phù hợp với từ khóa "<strong>{{ query }}</strong>"</p>
+                                <div class="suggestions">
+                                    <p class="mb-2"><strong>Gợi ý:</strong></p>
+                                    <ul class="list-unstyled">
+                                        <li>• Kiểm tra lại chính tả</li>
+                                        <li>• Thử từ khóa khác hoặc tổng quát hơn</li>
+                                        <li>• Tìm theo tên diễn viên hoặc đạo diễn</li>
+                                        <li>• Tìm theo thể loại phim</li>
+                                    </ul>
+                                </div>
+                                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                                    <i class="fas fa-home me-1"></i> Về trang chủ
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <!-- Empty Query -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-info text-center py-5">
+                            <i class="fas fa-info-circle fa-3x text-info mb-3"></i>
+                            <h4>Vui lòng nhập từ khóa tìm kiếm</h4>
+                            <p class="mb-3">Hãy nhập tên phim, diễn viên, đạo diễn hoặc thể loại để tìm kiếm</p>
+                            <a href="{{ url_for('index') }}" class="btn btn-primary">
+                                <i class="fas fa-home me-1"></i> Về trang chủ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-light mt-5 py-4">
+            <div class="container text-center">
+                <p class="text-muted mb-0">
+                    &copy; 2025 Máy Tìm Kiếm Phim Chuyên Sâu - Đồ án cuối kỳ
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Máy Tìm Kiếm Phim Việt Nam</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <!-- Header -->
+      <header class="bg-primary text-white py-3 mb-4">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <h1 class="h3 mb-0">
+                <i class="fas fa-film me-2"></i>
+                Máy Tìm Kiếm Phim
+              </h1>
+              <small class="text-light">Tìm kiếm phim từ Motchilli</small>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <a href="{{ url_for('index') }}" class="btn btn-outline-light">
+                <i class="fas fa-home me-1"></i> Trang chủ
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="container">
+        <!-- Search Form -->
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-8">
+            <div class="card shadow">
+              <div class="card-body p-4">
+                <form
+                  method="GET"
+                  action="{{ url_for('search') }}"
+                  class="search-form"
+                >
+                  <div class="input-group input-group-lg">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="q"
+                      id="searchInput"
+                      placeholder="Nhập tên phim, thể loại, diễn viên..."
+                      value="{{ request.args.get('q', '') }}"
+                      autocomplete="off"
+                    />
+                    <button class="btn btn-primary" type="submit">
+                      <i class="fas fa-search me-1"></i> Tìm kiếm
+                    </button>
+                  </div>
+
+                  <!-- Search suggestions -->
+                  <div id="suggestions" class="mt-2" style="display: none">
+                    <div class="list-group">
+                      <!-- Suggestions will be populated by JavaScript -->
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popular Movies Section -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <h2 class="h4 mb-3">
+              <i class="fas fa-star text-warning me-2"></i>
+              Phim Phổ Biến
+            </h2>
+            <div id="popularMovies" class="row">
+              <!-- Popular movies will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div class="row mb-5">
+          <div class="col-12 mb-4">
+            <h2 class="h4 mb-3">
+              <i class="fas fa-layer-group text-primary me-2"></i>
+              Thể Loại Phổ Biến
+            </h2>
+            <div class="row g-3">
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Cổ Trang') }}"
+                  class="btn btn-outline-warning w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-crown me-2"></i>Cổ Trang
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Hành Động') }}"
+                  class="btn btn-outline-danger w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-fist-raised me-2"></i>Hành Động
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Tình Cảm') }}"
+                  class="btn btn-outline-danger w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-heart me-2"></i>Tình Cảm
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Kinh Dị') }}"
+                  class="btn btn-outline-dark w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-ghost me-2"></i>Kinh Dị
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Hài Hước') }}"
+                  class="btn btn-outline-success w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-laugh-beam me-2"></i>Hài Hước
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Hoạt Hình') }}"
+                  class="btn btn-outline-info w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-dragon me-2"></i>Hoạt Hình
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Võ Thuật') }}"
+                  class="btn btn-outline-secondary w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-khanda me-2"></i>Võ Thuật
+                </a>
+              </div>
+              <div class="col-md-3 col-6">
+                <a
+                  href="{{ url_for('search', q='Tâm Lý') }}"
+                  class="btn btn-outline-primary w-100 py-3 category-btn"
+                >
+                  <i class="fas fa-brain me-2"></i>Tâm Lý
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <h2 class="h4 mb-3">
+              <i class="fas fa-globe-asia text-success me-2"></i>
+              Khám Phá Theo Quốc Gia
+            </h2>
+            <div class="row g-3">
+              <div class="col-md-2-4 col-6" style="width: 20%">
+                <a
+                  href="{{ url_for('search', q='Việt Nam') }}"
+                  class="btn btn-light border w-100 py-2 country-btn shadow-sm"
+                >
+                  <span class="fs-2 me-2">🇻🇳</span> <br />Việt Nam
+                </a>
+              </div>
+              <div class="col-md-2-4 col-6" style="width: 20%">
+                <a
+                  href="{{ url_for('search', q='Trung Quốc') }}"
+                  class="btn btn-light border w-100 py-2 country-btn shadow-sm"
+                >
+                  <span class="fs-2 me-2">🇨🇳</span> <br />Trung Quốc
+                </a>
+              </div>
+              <div class="col-md-2-4 col-6" style="width: 20%">
+                <a
+                  href="{{ url_for('search', q='Hàn Quốc') }}"
+                  class="btn btn-light border w-100 py-2 country-btn shadow-sm"
+                >
+                  <span class="fs-2 me-2">🇰🇷</span> <br />Hàn Quốc
+                </a>
+              </div>
+              <div class="col-md-2-4 col-6" style="width: 20%">
+                <a
+                  href="{{ url_for('search', q='Thái Lan') }}"
+                  class="btn btn-light border w-100 py-2 country-btn shadow-sm"
+                >
+                  <span class="fs-2 me-2">🇹🇭</span> <br />Thái Lan
+                </a>
+              </div>
+              <div class="col-md-2-4 col-6" style="width: 20%">
+                <a
+                  href="{{ url_for('search', q='Âu Mỹ') }}"
+                  class="btn btn-light border w-100 py-2 country-btn shadow-sm"
+                >
+                  <span class="fs-2 me-2">🇺🇸</span> <br />Âu Mỹ
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="bg-light mt-5 py-4">
+        <div class="container text-center">
+          <p class="text-muted mb-0">
+            &copy; 2025 Máy Tìm Kiếm Phim Chuyên Sâu - Đồ án cuối kỳ
+          </p>
+          <small class="text-muted">
+            Dữ liệu được thu thập từ Motchill.cc
+          </small>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+      // Load popular movies when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadPopularMovies();
+        initSearchSuggestions();
+      });
+    </script>
+  </body>
+</html>

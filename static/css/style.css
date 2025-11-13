@@ -1,0 +1,176 @@
+/* static/css/style.css */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;   
+}
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;   
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.movie-card {
+    transition: transform 0.2s;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.movie-card img {
+    height: 300px; /* Chiều cao cố định cho poster */
+    object-fit: cover;
+}
+
+.movie-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+/* Search Results Styles */
+.poster-container {
+    position: relative;
+    width: 100%;
+    padding-top: 150%; /* Aspect ratio 2:3 */
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.poster-img, .no-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-result-card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+}
+
+.search-result-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+mark {
+    background-color: #fff3cd;
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+/* Suggestions Box */
+#suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: white;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Carousel Container */
+.movie-carousel-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;      /* Không cho xuống dòng */
+    overflow-x: auto;       /* Cho phép cuộn ngang */
+    scroll-behavior: smooth;/* Cuộn mượt mà */
+    -webkit-overflow-scrolling: touch; /* Mượt trên mobile */
+    padding-bottom: 10px;
+    
+    /* Ẩn thanh cuộn (scrollbar) cho đẹp */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+}
+
+.scrolling-wrapper::-webkit-scrollbar { 
+    display: none; /* Chrome/Safari/Webkit */
+}
+
+/* Card trong carousel có chiều rộng cố định */
+.card-fixed-width {
+    flex: 0 0 auto;    /* Không co giãn */
+    width: 200px;      /* Chiều rộng cố định mỗi card */
+    margin-right: 15px;
+}
+
+/* Nút điều hướng trái phải */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.scroll-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.scroll-left { left: -20px; }
+.scroll-right { right: -20px; }
+
+/* Responsive: Ẩn nút trên mobile vì vuốt tay tiện hơn */
+@media (max-width: 768px) {
+    .scroll-btn { display: none; }
+}
+
+/* Style cho nút category và country */
+.category-btn {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+.category-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.country-btn {
+    transition: all 0.3s ease;
+}
+.country-btn:hover {
+    background-color: #e9ecef;
+    transform: translateY(-3px);
+    border-color: #ced4da !important;
+}
+/* Responsive cho nút quốc gia trên mobile */
+@media (max-width: 768px) {
+    .col-md-2-4 {
+        width: 50% !important; /* Trên điện thoại thì về 2 cột */
+    }
+}
