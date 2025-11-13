@@ -67,50 +67,53 @@ MOVIE_SEARCH_ENGINE/
 ├── app.py                      # File chạy chính (Flask Server)
 ├── requirements.txt            # Các thư viện cần thiết
 └── README.md                   # Tài liệu hướng dẫn
+```
 
-
-🛠️ Hướng Dẫn Cài Đặt (Cho Developer)
-1️⃣. Yêu Cầu Hệ Thống
+### 🛠️ Hướng Dẫn Cài Đặt (Cho Developer)
+## 1️⃣. Yêu Cầu Hệ Thống
 
 Python 3.8 trở lên
 
 Kết nối Internet (để crawler hoạt động)
 
-2️⃣. Cài Đặt Thư Viện
+## 2️⃣. Cài Đặt Thư Viện
+```
 pip install flask requests beautifulsoup4 underthesea numpy
+```
 
-3️⃣. Thu Thập Dữ Liệu (Crawling)
+## 3️⃣. Thu Thập Dữ Liệu (Crawling)
 
 Trước khi chạy web, cần thu thập dữ liệu phim và lưu vào database:
-
+```
 python modules/module1_crawling/crawler.py
-
+```
 
 ⏳ Lưu ý: Quá trình này có thể mất vài phút để tải dữ liệu từ internet.
 
-4️⃣. Khởi Chạy Website
+## 4️⃣. Khởi Chạy Website
+```
 python app.py
-
+```
 
 Sau khi server chạy, mở trình duyệt và truy cập:
 👉 http://127.0.0.1:5000
 
-📘 Hướng Dẫn Sử Dụng (Cho Người Dùng Cuối)
-🔍 1. Tìm Kiếm Cơ Bản
+### 📘 Hướng Dẫn Sử Dụng (Cho Người Dùng Cuối)
+* 🔍 1. Tìm Kiếm Cơ Bản
 
 Nhập từ khóa: tên phim (“Mai”, “Đào”), diễn viên (“Trấn Thành”), hoặc đạo diễn.
 
 Gợi ý (suggestions) sẽ tự động hiển thị khi nhập từ 2 ký tự trở lên.
 
-🧭 2. Tìm Kiếm Nâng Cao
+* 🧭 2. Tìm Kiếm Nâng Cao
 
-Hệ thống hỗ trợ các từ khóa đặc biệt:
+* Hệ thống hỗ trợ các từ khóa đặc biệt:
 
 Loại tìm kiếm	Ví dụ	Mô tả
 Năm	2024, 2025	Xem phim mới nhất
 Quốc gia	Hàn Quốc, Trung Quốc, Việt Nam	Lọc theo nước sản xuất
 Thể loại	Hành động, Cổ trang, Tình cảm	Lọc theo thể loại phim
-🌟 3. Khám Phá Nhanh
+* 🌟 3. Khám Phá Nhanh
 
 Phim Phổ Biến: Lướt carousel để xem các phim hot nhất.
 
@@ -120,7 +123,7 @@ Theo Thể Loại: click “Cổ Trang”, “Hành Động”, ...
 
 Theo Quốc Gia: click 🇻🇳, 🇰🇷, 🇨🇳, ...
 
-🎞️ 4. Xem Kết Quả
+* 🎞️ 4. Xem Kết Quả
 
 Kết quả hiển thị: Poster, Năm sản xuất, Rating (sao).
 
@@ -128,12 +131,12 @@ Từ khóa được Highlight (tô vàng) trong tiêu đề & mô tả.
 
 Click “Xem phim” để mở trang nguồn xem phim.
 
-📊 Đánh Giá Hệ Thống (Evaluation)
+### 📊 Đánh Giá Hệ Thống (Evaluation)
 
 Chạy lệnh sau để xem báo cáo độ chính xác:
-
+```
 python modules/module5_evaluation/evaluator.py
-
+```
 🔎 Kết Quả Thực Nghiệm (Top-10)
 Truy vấn mẫu	Precision@10	Đánh giá
 "2024", "2025"	1.00	Xuất sắc (Nhận diện chính xác phim mới)
@@ -141,7 +144,7 @@ Truy vấn mẫu	Precision@10	Đánh giá
 "Cổ trang"	1.00	Xuất sắc
 "Hành động"	1.00	Xuất sắc
 MAP Score	~1.00	Độ chính xác trung bình rất cao
-⚙️ Công Nghệ Sử Dụng
+### ⚙️ Công Nghệ Sử Dụng
 Thành phần	Công nghệ	Chi tiết
 Ngôn ngữ	Python 3.x	Ngôn ngữ lập trình chính
 Backend	Flask	Web Framework nhẹ và linh hoạt
@@ -149,15 +152,13 @@ Database	SQLite	Lưu trữ dữ liệu có cấu trúc
 Crawler	Requests, BeautifulSoup4	Thu thập và bóc tách dữ liệu HTML
 Frontend	HTML5, CSS3, JS	Giao diện người dùng (Bootstrap 5)
 NLP	Underthesea	Thư viện xử lý ngôn ngữ tiếng Việt
-👥 Thông Tin Tác Giả
+### 👥 Thông Tin Tác Giả
 
-Sinh viên thực hiện: [Tên Của Bạn]
+Sinh viên thực hiện: Pham Nguyen Minh Phong, Nguyen Hoai My, Cao Tran Anh Khoa
 
-Mã số sinh viên: [MSSV Của Bạn]
+Lớp: AI1909
 
-Lớp: [Tên Lớp]
-
-Giảng viên hướng dẫn: [Tên Giảng Viên]
+Giảng viên hướng dẫn: Ha Anh Vu
 
 📄 Bản Quyền (License)
 
