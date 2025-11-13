@@ -137,21 +137,27 @@ Chạy lệnh sau để xem báo cáo độ chính xác:
 ```
 python modules/module5_evaluation/evaluator.py
 ```
-🔎 Kết Quả Thực Nghiệm (Top-10)
-Truy vấn mẫu	Precision@10	Đánh giá
-"2024", "2025"	1.00	Xuất sắc (Nhận diện chính xác phim mới)
-"Hàn Quốc"	1.00	Xuất sắc (Nhờ thuật toán Scoring cụm từ)
-"Cổ trang"	1.00	Xuất sắc
-"Hành động"	1.00	Xuất sắc
-MAP Score	~1.00	Độ chính xác trung bình rất cao
+### 🔎 Kết Quả Thực Nghiệm (Top-10)
+
+| Truy vấn mẫu | Precision@10 | Đánh giá |
+|---------------|---------------|----------|
+| "2024", "2025" | 1.00 | Xuất sắc (Nhận diện chính xác phim mới) |
+| "Hàn Quốc" | 1.00 | Xuất sắc (Nhờ thuật toán Scoring cụm từ) |
+| "Cổ trang" | 1.00 | Xuất sắc |
+| "Hành động" | 1.00 | Xuất sắc |
+| **MAP Score** | ~1.00 | Độ chính xác trung bình rất cao |
+
+
 ### ⚙️ Công Nghệ Sử Dụng
-Thành phần	Công nghệ	Chi tiết
-Ngôn ngữ	Python 3.x	Ngôn ngữ lập trình chính
-Backend	Flask	Web Framework nhẹ và linh hoạt
-Database	SQLite	Lưu trữ dữ liệu có cấu trúc
-Crawler	Requests, BeautifulSoup4	Thu thập và bóc tách dữ liệu HTML
-Frontend	HTML5, CSS3, JS	Giao diện người dùng (Bootstrap 5)
-NLP	Underthesea	Thư viện xử lý ngôn ngữ tiếng Việt
+
+| Thành phần | Công nghệ | Chi tiết |
+|-------------|------------|----------|
+| **Ngôn ngữ** | Python 3.x | Ngôn ngữ lập trình chính |
+| **Backend** | Flask | Web Framework nhẹ và linh hoạt |
+| **Database** | SQLite | Lưu trữ dữ liệu có cấu trúc |
+| **Crawler** | Requests, BeautifulSoup4 | Thu thập và bóc tách dữ liệu HTML |
+| **Frontend** | HTML5, CSS3, JS | Giao diện người dùng (Bootstrap 5) |
+| **NLP** | Underthesea | Thư viện xử lý ngôn ngữ tiếng Việt |
 ### 👥 Thông Tin Tác Giả
 
 Sinh viên thực hiện: Pham Nguyen Minh Phong, Nguyen Hoai My, Cao Tran Anh Khoa
